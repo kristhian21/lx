@@ -4,6 +4,9 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"time"
+
+	utils "github.com/kristhian21/lx/src/internal"
 )
 
 func main() {
@@ -15,14 +18,19 @@ func main() {
 
 	for _, file := range files {
 		fileInfo, _ := file.Info()
-		var typeIcon string
+		
+		size := utils.ByteToMB(fileInfo.Size())
+		name := fileInfo.Name()
+		modTime := fileInfo.ModTime().Format(time.DateTime)
+
+		var icon string
 
 		if fileInfo.IsDir() {
-			typeIcon = string('\uf4d3') + " "
+			icon = string('\uf4d3') + " "
 		} else {
-			typeIcon = string('\uf4a5') + " "
+		 	icon = string('\uf4a5') + " "
 		}
 		
-		fmt.Println(typeIcon, fileInfo.Size(), fileInfo.Name())
+		fmt.Println(icon, size, modTime, name)
 	}
 }
